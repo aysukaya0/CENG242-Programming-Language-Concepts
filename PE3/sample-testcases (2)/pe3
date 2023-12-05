@@ -1,0 +1,112 @@
+{-# LANGUAGE FlexibleInstances #-}
+
+module PE3 where
+
+import Data.List (sort, sortBy)
+import Text.Printf (printf)
+
+data Term = Const Integer | Pw Integer Power | Trig Integer Power Trigonometric | Exp Integer Power Exponential
+
+data Power = Power Integer
+data Polynomial = Polynomial [(Integer, Power)]
+data Exponential = Exponential Polynomial
+data Trigonometric = Sin Polynomial | Cos Polynomial
+
+class Evaluable a where
+    function :: a -> (Integer -> Double)
+
+class Differentiable a where
+    derivative :: a -> [Term]
+
+-- You can use this as is
+getRounded :: Double -> Double 
+getRounded x = read s :: Double
+               where s = printf "%.2f" x
+
+-- You don't have to follow the order the functions appear in the file
+-- For example, you could first define all Show instances, then all Eq instances etc.
+-- if that implementation order is more convenient for you.
+
+
+
+-- INSTANCES FOR POWER
+
+instance Show Power where
+    show _ = ""
+
+instance Eq Power where
+    _ == _ = False
+
+instance Ord Power where
+    _ <= _ = False
+
+instance Evaluable Power where
+    function _ = \x -> 0.0
+
+instance Differentiable Power where
+    derivative _ = []
+
+
+
+-- INSTANCES FOR POLYNOMIAL
+
+instance Show Polynomial where
+    show _ = ""
+
+instance Evaluable Polynomial where
+    function _ = \x -> 0.0
+
+instance Differentiable Polynomial where
+    derivative _ = []
+
+
+
+
+-- INSTANCES FOR TRIGONOMETRIC
+
+instance Show Trigonometric where
+    show _ = []
+
+instance Evaluable Trigonometric where
+    function _ = \x -> 0.0
+
+instance Differentiable Trigonometric where
+    derivative _ = []
+
+
+
+
+-- INSTANCES FOR EXPONENTIAL
+
+instance Show Exponential where
+    show _ = ""
+
+instance Evaluable Exponential where
+    function _ = \x -> 0.0
+
+instance Differentiable Exponential where
+    derivative _ = []
+
+
+
+-- INSTANCES FOR TERM
+
+instance Show Term where
+    show _ = ""
+
+instance Evaluable Term where
+    function _ = \x -> 0.0
+
+instance Differentiable Term where
+    derivative _ = []
+
+
+
+
+-- INSTANCES FOR [TERM]
+
+instance Evaluable [Term] where
+    function _ = \x -> 0.0
+
+instance Differentiable [Term] where
+    derivative _ = []
